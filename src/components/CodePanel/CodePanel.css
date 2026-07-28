@@ -1,0 +1,47 @@
+.code-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.code-panel h3 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.code-container {
+  background-color: #1e1e1e; /* darker than card potentially */
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.code-line {
+  display: flex;
+  padding: 0.15rem 0;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.code-line.active-line {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-left: 3px solid var(--accent-blue);
+}
+
+.line-number {
+  color: var(--text-secondary);
+  width: 2rem;
+  text-align: right;
+  margin-right: 1rem;
+  user-select: none;
+  opacity: 0.5;
+}
+
+.code-line pre {
+  margin: 0;
+  color: #e5e5e5;
+}

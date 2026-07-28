@@ -1,0 +1,47 @@
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-panel h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: -0.5rem;
+}
+
+.info-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.complexities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.complexity-item {
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.complexity-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.complexity-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-purple);
+  font-family: var(--font-mono);
+}

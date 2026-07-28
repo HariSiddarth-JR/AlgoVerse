@@ -1,0 +1,82 @@
+.glass-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-brand:hover {
+  text-shadow: none;
+}
+
+.logo-icon {
+  color: var(--accent-blue);
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px var(--accent-blue-glow);
+}
+
+.version-badge {
+  font-size: 0.7rem;
+  background: var(--accent-purple-glow);
+  color: var(--accent-purple);
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-sm);
+  margin-left: 0.2rem;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.breadcrumb-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: var(--text-primary);
+  text-shadow: none;
+}
+
+.breadcrumb-separator {
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.breadcrumb-current {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+}

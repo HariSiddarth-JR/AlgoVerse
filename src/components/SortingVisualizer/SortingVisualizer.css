@@ -1,0 +1,50 @@
+.visualizer-container {
+  height: 400px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+.bars-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 100%;
+  width: 100%;
+}
+
+.bar-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.2s ease, background-color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5px;
+}
+
+.bar-value {
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  transform: rotate(-90deg);
+  margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .bar-value {
+    transform: none;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,117 @@
+.category-container {
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.category-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.category-header h1 {
+  font-size: 3rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.category-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.algo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.algo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.algo-card:hover::before {
+  opacity: 1;
+}
+
+.algo-card-content {
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.algo-card h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.algo-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  min-height: 4.5rem;
+}
+
+.algo-metrics {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.metric-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  border: 1px solid var(--border-color);
+}
+
+.metric-badge svg {
+  color: var(--accent-blue);
+}
+
+.btn-primary-full {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  background: var(--accent-blue);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary-full:hover {
+  background: var(--accent-purple);
+  transform: translateY(-2px);
+  color: white;
+}
