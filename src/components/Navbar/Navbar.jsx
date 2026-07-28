@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../../assets/Algoverse LOGO.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { algorithmsRegistry } from '../../algorithms';
 import './Navbar.css';
@@ -6,7 +7,7 @@ import './Navbar.css';
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // Extract algoId from url if on explorer page
   const pathParts = location.pathname.split('/');
   const isExplore = pathParts[1] === 'explore';
@@ -16,10 +17,10 @@ const Navbar = () => {
   const getBreadcrumbs = () => {
     if (!isExplore) return null;
 
-    const categoryTitle = currentCategory 
-      ? currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1) 
+    const categoryTitle = currentCategory
+      ? currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)
       : '';
-      
+
     const algo = algorithmsRegistry[currentAlgoId];
 
     return (
@@ -40,10 +41,10 @@ const Navbar = () => {
   return (
     <nav className="glass-navbar">
       <Link to="/" className="nav-brand">
-        <span className="logo-icon">▲</span>
+        <img src={logo} alt="AlgoVerse" className="logo-icon" />
         AlgoVerse <span className="version-badge">V2</span>
       </Link>
-      
+
       <div className="nav-controls">
         {getBreadcrumbs()}
         {!isExplore && (
