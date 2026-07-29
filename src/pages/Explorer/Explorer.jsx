@@ -11,6 +11,8 @@ import CodePanel from '../../components/CodePanel/CodePanel';
 import AlgorithmInfo from '../../components/AlgorithmInfo/AlgorithmInfo';
 import Statistics from '../../components/Statistics/Statistics';
 
+import './Explorer.css';
+
 const Explorer = () => {
   const { category, algoId } = useParams();
   const navigate = useNavigate();
@@ -47,12 +49,12 @@ const Explorer = () => {
   if (!currentAlgo) return null;
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
+    <div className="explorer-container">
+      <div className="explorer-layout">
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 350px', gap: '2rem' }}>
+        <div className="explorer-main-grid">
           {/* Left Column: Visualizer + Controls */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          <div className="explorer-column">
             {currentAlgo.category === 'Sorting' && (
               <SortingEngine 
                 array={array} 
@@ -83,7 +85,7 @@ const Explorer = () => {
           </div>
 
           {/* Right Column: Info & Stats */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          <div className="explorer-column">
             <Statistics 
               comparisons={comparisons}
               swaps={swaps}

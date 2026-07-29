@@ -1,0 +1,37 @@
+.explorer-container {
+  padding: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.explorer-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.explorer-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 2rem;
+}
+
+.explorer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .explorer-main-grid {
+    grid-template-columns: 1fr; /* Stack visually on medium/small screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .explorer-container {
+    padding: 1rem;
+  }
+}

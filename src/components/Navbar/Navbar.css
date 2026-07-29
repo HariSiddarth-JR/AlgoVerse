@@ -2,6 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
   padding: 1rem 2rem;
   background: var(--bg-card);
   backdrop-filter: blur(12px);
@@ -10,6 +12,12 @@
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .glass-navbar {
+    padding: 1rem;
+  }
 }
 
 .nav-brand {
@@ -45,12 +53,14 @@
 .nav-controls {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
 .breadcrumbs {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   font-size: 0.95rem;
   font-weight: 500;

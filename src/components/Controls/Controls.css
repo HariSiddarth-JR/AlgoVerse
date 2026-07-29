@@ -11,7 +11,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .controls-container {
+    padding: 1.5rem !important;
+    gap: 1.5rem;
+  }
 }
 
 .btn-primary, .btn-secondary, .btn-icon {
