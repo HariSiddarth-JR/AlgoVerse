@@ -12,12 +12,9 @@
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-@media (max-width: 768px) {
-  .glass-navbar {
-    padding: 1rem;
-  }
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-brand {
@@ -55,6 +52,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  max-width: 100%;
 }
 
 .breadcrumbs {
@@ -64,6 +62,7 @@
   gap: 0.5rem;
   font-size: 0.95rem;
   font-weight: 500;
+  max-width: 100%;
 }
 
 .breadcrumb-link {
@@ -90,4 +89,33 @@
 .nav-link {
   font-size: 0.95rem;
   font-weight: 500;
+}
+
+/* Tablet Breakpoint (481px - 768px) */
+@media (max-width: 768px) {
+  .glass-navbar {
+    padding: 0.85rem 1.25rem;
+    gap: 0.75rem;
+  }
+}
+
+/* Small Mobile Breakpoint (<= 480px) */
+@media (max-width: 480px) {
+  .glass-navbar {
+    padding: 0.75rem 0.85rem;
+    gap: 0.5rem;
+  }
+  .nav-brand {
+    font-size: 1.2rem;
+  }
+  .logo-icon {
+    height: 22px;
+  }
+  .breadcrumbs {
+    font-size: 0.8rem;
+    gap: 0.25rem;
+  }
+  .nav-controls {
+    gap: 0.5rem;
+  }
 }

@@ -1,8 +1,11 @@
 .controls-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2.5rem !important;
+  gap: 1.75rem;
+  padding: 2rem !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   flex: 1;
   justify-content: space-evenly;
 }
@@ -12,26 +15,24 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
-}
-
-@media (max-width: 768px) {
-  .controls-container {
-    padding: 1.5rem !important;
-    gap: 1.5rem;
-  }
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .btn-primary, .btn-secondary, .btn-icon {
+  min-height: 44px;
+  min-width: 44px;
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.2s;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  box-sizing: border-box;
+  touch-action: manipulation;
 }
 
 .btn-primary {
@@ -70,16 +71,35 @@
   cursor: not-allowed;
 }
 
+.sliders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
 .speed-control {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   font-weight: 500;
+  width: 100%;
+}
+
+.speed-control label {
+  white-space: nowrap;
+  font-size: 0.95rem;
+  color: var(--text-primary);
 }
 
 .speed-control input[type="range"] {
   flex: 1;
+  width: 100%;
+  height: 36px;
   cursor: pointer;
+  accent-color: var(--accent-blue);
+  touch-action: manipulation;
 }
 
 .progress-bar-container {
@@ -87,10 +107,72 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   overflow: hidden;
+  width: 100%;
 }
 
 .progress-bar {
   height: 100%;
   background-color: var(--accent-green);
   transition: width 0.3s linear;
+}
+
+/* Tablet Responsive Breakpoint (481px - 768px) */
+@media (max-width: 768px) {
+  .controls-container {
+    padding: 1.5rem !important;
+    gap: 1.25rem;
+  }
+}
+
+/* Mobile Responsive Breakpoint (<= 480px) */
+@media (max-width: 480px) {
+  .controls-container {
+    padding: 1rem !important;
+    gap: 1rem;
+  }
+
+  .controls-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    grid-template-areas:
+      "step-back play step-fwd"
+      "reset reset reset";
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .btn-step-back {
+    grid-area: step-back;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .btn-play-pause {
+    grid-area: play;
+    width: 100%;
+    padding: 0.65rem 1rem;
+  }
+
+  .btn-step-fwd {
+    grid-area: step-fwd;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .btn-reset-action {
+    grid-area: reset;
+    width: 100%;
+    padding: 0.65rem 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .speed-control {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .speed-control label {
+    font-size: 0.85rem;
+  }
 }

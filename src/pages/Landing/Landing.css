@@ -120,4 +120,33 @@
   .hero-title {
     font-size: 3rem;
   }
+  .features-section {
+    padding: 3rem 1.5rem 5rem 1.5rem;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 1.5rem 0.75rem;
+    min-height: 50vh;
+  }
+  .hero-title {
+    font-size: 2.1rem;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+  .btn-primary-large {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.85rem 1.25rem;
+    font-size: 1rem;
+  }
+  .features-section {
+    padding: 2rem 0.75rem 4rem 0.75rem;
+  }
 }

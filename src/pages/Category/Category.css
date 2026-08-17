@@ -37,8 +37,27 @@
 
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 480px) {
+  .category-container {
+    padding: 1.25rem 0.75rem;
+  }
+  .category-header {
+    margin-bottom: 1.5rem;
+  }
+  .category-header h1 {
+    font-size: 1.75rem !important;
+  }
+  .category-header p {
+    font-size: 0.9rem;
+  }
+  .category-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 .algo-card {

@@ -17,27 +17,54 @@ const Controls = ({
   return (
     <div className="glass-card controls-container">
       <div className="controls-row">
-        <button className="btn-icon" onClick={stepBackward} disabled={isPlaying}>
+        <button 
+          className="btn-icon btn-step-back" 
+          onClick={stepBackward} 
+          disabled={isPlaying}
+          aria-label="Step Backward"
+          title="Step Backward"
+        >
           ⏮
         </button>
         {isPlaying ? (
-          <button className="btn-primary" onClick={pause}>
+          <button 
+            className="btn-primary btn-play-pause" 
+            onClick={pause}
+            aria-label="Pause"
+            title="Pause"
+          >
             ⏸ Pause
           </button>
         ) : (
-          <button className="btn-primary" onClick={play}>
+          <button 
+            className="btn-primary btn-play-pause" 
+            onClick={play}
+            aria-label="Play"
+            title="Play"
+          >
             ▶ Play
           </button>
         )}
-        <button className="btn-icon" onClick={stepForward} disabled={isPlaying}>
+        <button 
+          className="btn-icon btn-step-fwd" 
+          onClick={stepForward} 
+          disabled={isPlaying}
+          aria-label="Step Forward"
+          title="Step Forward"
+        >
           ⏭
         </button>
-        <button className="btn-secondary" onClick={reset}>
+        <button 
+          className="btn-secondary btn-reset-action" 
+          onClick={reset}
+          aria-label="Reset"
+          title="Reset"
+        >
           🔄 Reset
         </button>
       </div>
 
-      <div className="sliders-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
+      <div className="sliders-container">
         <div className="speed-control">
           <label htmlFor="speed">Speed</label>
           <input 
@@ -48,6 +75,7 @@ const Controls = ({
             step="100" 
             value={speed}
             onChange={(e) => setSpeed(Number(e.target.value))}
+            aria-label="Animation Speed"
           />
         </div>
 
@@ -62,6 +90,7 @@ const Controls = ({
             value={arraySize}
             onChange={(e) => setArraySize(Number(e.target.value))}
             disabled={isPlaying}
+            aria-label="Array Size"
           />
         </div>
       </div>

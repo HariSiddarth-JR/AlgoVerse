@@ -3,35 +3,74 @@
   max-width: 1600px;
   margin: 0 auto;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .explorer-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  width: 100%;
 }
 
 .explorer-main-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 350px;
   gap: 2rem;
+  width: 100%;
 }
 
 .explorer-column {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
+  min-width: 0;
 }
 
-/* Mobile Responsiveness */
+/* Tablet Landscape Breakpoint (769px - 1024px) */
 @media (max-width: 1024px) {
+  .explorer-container {
+    padding: 1.5rem;
+  }
   .explorer-main-grid {
-    grid-template-columns: 1fr; /* Stack visually on medium/small screens */
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .explorer-column {
+    gap: 1.5rem;
   }
 }
 
+/* Tablet Portrait Breakpoint (481px - 768px) */
 @media (max-width: 768px) {
   .explorer-container {
     padding: 1rem;
+  }
+  .explorer-layout {
+    gap: 1.25rem;
+  }
+  .explorer-main-grid {
+    gap: 1.25rem;
+  }
+  .explorer-column {
+    gap: 1.25rem;
+  }
+}
+
+/* Small Mobile Breakpoint (<= 480px) */
+@media (max-width: 480px) {
+  .explorer-container {
+    padding: 0.75rem 0.5rem;
+  }
+  .explorer-layout {
+    gap: 1rem;
+  }
+  .explorer-main-grid {
+    gap: 1rem;
+  }
+  .explorer-column {
+    gap: 1rem;
   }
 }

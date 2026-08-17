@@ -4,19 +4,26 @@
   align-items: flex-end;
   justify-content: center;
   padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .engine-bars-wrapper {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 8px;
+  gap: clamp(2px, 1.2vw, 8px);
   height: 100%;
   width: 100%;
+  max-width: 100%;
 }
 
 .engine-bar-container {
   flex: 1;
+  min-width: 2px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -32,22 +39,42 @@
   align-items: flex-start;
   padding-top: 8px;
   background-image: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
+  position: relative;
+  overflow: hidden;
 }
 
 .engine-bar-value {
   color: var(--text-primary);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   font-family: var(--font-mono);
-  transform: rotate(-90deg);
-  margin-top: 15px;
   user-select: none;
+  pointer-events: none;
 }
 
-@media (min-width: 768px) {
+/* Tablet Breakpoint (481px - 768px) */
+@media (max-width: 768px) {
+  .engine-container {
+    height: 340px;
+    padding: 1.5rem 1rem 1rem 1rem;
+  }
   .engine-bar-value {
-    transform: none;
-    font-size: 0.9rem;
-    margin-top: 8px;
+    font-size: 0.75rem;
+    transform: rotate(-90deg);
+    margin-top: 12px;
+  }
+}
+
+/* Small Mobile Breakpoint (<= 480px) */
+@media (max-width: 480px) {
+  .engine-container {
+    height: 280px;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+  }
+  .engine-bars-wrapper {
+    gap: max(1px, 1vw);
+  }
+  .engine-bar-value {
+    display: none;
   }
 }
