@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables and secrets
+.env
+.env.*
+*.env
+*credentials*
+!.env.example
+
+# Backend dependencies
+server/node_modules/
+/LinkedIn Post .mp4

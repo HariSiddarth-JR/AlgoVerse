@@ -2,23 +2,26 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { generateRandomArray } from '../utils/arrayGenerator';
 
 export const useVisualizer = (algorithm) => {
-  const [array, setArray] = useState([]);
+  const [arraySize, setArraySize] = useState(10);
+  const [rawArray, setRawArray] = useState([]);
   const [steps, setSteps] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState(500); // ms per step
-  
-  // Metrics
-  const [comparisons, setComparisons] = useState(0);
-  const [swaps, setSwaps] = useState(0);
-
-  const [arraySize, setArraySize] = useState(20);
 
   const timerRef = useRef(null);
 
+  const clearCurrentTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
   const initialize = useCallback(() => {
+    clearCurrentTimer();
     const newArray = generateRandomArray(arraySize, 10, 100);
-    setArray(newArray);
+    setRawArray(newArray);
     
     if (algorithm && algorithm.getSteps) {
       const generatedSteps = algorithm.getSteps([...newArray]);
@@ -29,14 +32,9 @@ export const useVisualizer = (algorithm) => {
     
     setCurrentStepIndex(0);
     setIsPlaying(false);
-    setComparisons(0);
-    setSwaps(0);
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-  }, [algorithm, arraySize]);
+  }, [algorithm, arraySize, clearCurrentTimer]);
 
-  // Initial load or size change
+  // Initial load or dependency change
   useEffect(() => {
     initialize();
   }, [initialize]);
@@ -46,79 +44,69 @@ export const useVisualizer = (algorithm) => {
   };
 
   const play = () => {
+    if (steps.length === 0) return;
     if (currentStepIndex >= steps.length - 1) {
       setCurrentStepIndex(0);
-      if (steps.length > 0) setArray(steps[0].array);
-      setComparisons(0);
-      setSwaps(0);
-      setIsPlaying(true);
-    } else {
-      setIsPlaying(true);
     }
+    setIsPlaying(true);
   };
 
   const pause = () => {
     setIsPlaying(false);
+    clearCurrentTimer();
   };
 
   const stepForward = useCallback(() => {
     if (currentStepIndex < steps.length - 1) {
-      const nextIndex = currentStepIndex + 1;
-      setCurrentStepIndex(nextIndex);
-      
-      const step = steps[nextIndex];
-      if (step) {
-        setArray(step.array);
-        if (step.type === 'compare') {
-          setComparisons(prev => prev + 1);
-        } else if (step.type === 'swap' || step.type === 'newMin') {
-          setSwaps(prev => prev + 1);
-        }
-      }
-      return nextIndex < steps.length - 1; // return true if can continue
+      setCurrentStepIndex(prev => prev + 1);
+      return true;
     }
     setIsPlaying(false);
+    clearCurrentTimer();
     return false;
-  }, [currentStepIndex, steps]);
+  }, [currentStepIndex, steps.length, clearCurrentTimer]);
 
   const stepBackward = () => {
+    if (isPlaying) {
+      pause();
+    }
     if (currentStepIndex > 0) {
-      const prevIndex = currentStepIndex - 1;
-      setCurrentStepIndex(prevIndex);
-      
-      const step = steps[prevIndex];
-      if (step) {
-        setArray(step.array);
-        // Note: Accurately rewinding metrics is tricky without storing them in the step itself, 
-        // but for a simple visualizer, we can either store cumulative metrics in steps or just accept slight inconsistencies when rewinding.
-        // For production, we'd store `comparisonsSoFar` in the step object.
-      }
+      setCurrentStepIndex(prev => prev - 1);
     }
   };
 
+  // Playback timer effect
   useEffect(() => {
     if (isPlaying) {
       timerRef.current = setTimeout(() => {
-        const canContinue = stepForward();
-        if (!canContinue) {
+        if (currentStepIndex < steps.length - 1) {
+          setCurrentStepIndex(prev => prev + 1);
+        } else {
           setIsPlaying(false);
         }
-      }, 1000 - speed); // Invert speed so higher = faster, range 100-900 
+      }, Math.max(50, 1000 - speed));
     }
     return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
+      clearCurrentTimer();
     };
-  }, [isPlaying, currentStepIndex, speed, stepForward]);
+  }, [isPlaying, currentStepIndex, steps.length, speed, clearCurrentTimer]);
 
+  // Derive all step state directly from steps[currentStepIndex]
   const currentStep = steps[currentStepIndex] || null;
 
   return {
-    array: currentStep ? currentStep.array : array,
+    array: currentStep ? currentStep.array : rawArray,
     activeIndices: currentStep ? currentStep.indices : [],
     stepType: currentStep ? currentStep.type : '',
     message: currentStep ? currentStep.message : 'Ready to sort',
+    currentStep,
+    currentStepIndex,
+    totalSteps: steps.length,
+    minimumIndex: currentStep?.metadata?.minimumIndex ?? null,
+    minimumValue: currentStep?.metadata?.minimumValue ?? null,
+    sortedIndices: currentStep?.metadata?.sortedIndices ?? [],
+    comparisons: currentStep?.metadata?.comparisonsCount ?? 0,
+    swaps: currentStep?.metadata?.swapsCount ?? 0,
     isPlaying,
     speed,
     setSpeed,
@@ -129,8 +117,6 @@ export const useVisualizer = (algorithm) => {
     reset,
     stepForward,
     stepBackward,
-    comparisons,
-    swaps,
-    progress: steps.length > 0 ? (currentStepIndex / (steps.length - 1)) * 100 : 0
+    progress: steps.length > 1 ? (currentStepIndex / (steps.length - 1)) * 100 : (steps.length === 1 ? 100 : 0)
   };
 };

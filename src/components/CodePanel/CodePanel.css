@@ -1,66 +1,67 @@
+/* ==========================================================================
+   AlgoVerse - Code Panel Styles
+   ========================================================================== */
+
 .code-panel {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .code-panel h3 {
   margin-bottom: 1rem;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
 .code-container {
-  background-color: #1e1e1e; /* darker than card potentially */
-  border-radius: var(--radius-sm);
-  padding: 1rem;
+  background-color: var(--bg-code);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1rem;
   overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  flex: 1;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .code-line {
   display: flex;
-  padding: 0.15rem 0;
+  padding: 0.15rem 0.5rem;
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }
 
 .code-line.active-line {
-  background-color: rgba(59, 130, 246, 0.2);
-  border-left: 3px solid var(--accent-blue);
+  background-color: rgba(37, 99, 235, 0.25);
+  border-left: 3px solid var(--primary);
 }
 
 .line-number {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   width: 2rem;
   text-align: right;
-  margin-right: 1rem;
+  margin-right: 1.25rem;
   user-select: none;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .code-line pre {
   margin: 0;
-  color: #e5e5e5;
+  color: #e2e8f0;
 }
 
-/* Small Mobile Breakpoint (<= 480px) */
 @media (max-width: 480px) {
   .code-panel {
-    padding: 1.25rem 1rem !important;
-  }
-  .code-panel h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    padding: 1.25rem 1rem;
   }
   .code-container {
-    padding: 0.75rem 0.5rem;
+    padding: 0.75rem;
     font-size: 0.8rem;
-  }
-  .line-number {
-    width: 1.5rem;
-    margin-right: 0.5rem;
   }
 }

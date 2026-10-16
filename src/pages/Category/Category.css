@@ -1,148 +1,200 @@
-.category-container {
-  padding: 3rem 2rem;
+/* ==========================================================================
+   AlgoVerse - Algorithm Catalogue (Category) Page
+   ========================================================================== */
+
+.catalogue-page {
+  padding: 3rem 2rem 5rem;
   max-width: 1400px;
   margin: 0 auto;
-  min-height: calc(100vh - 80px);
+  width: 100%;
 }
 
-.category-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-@media (max-width: 768px) {
-  .category-container {
-    padding: 2rem 1rem;
-  }
-  .category-header {
-    margin-bottom: 2rem;
-  }
-  .category-header h1 {
-    font-size: 2rem !important;
-  }
-}
-
-.category-header h1 {
-  font-size: 3rem;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-}
-
-.category-header p {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-
-@media (max-width: 480px) {
-  .category-container {
-    padding: 1.25rem 0.75rem;
-  }
-  .category-header {
-    margin-bottom: 1.5rem;
-  }
-  .category-header h1 {
-    font-size: 1.75rem !important;
-  }
-  .category-header p {
-    font-size: 0.9rem;
-  }
-  .category-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-}
-
-.algo-card {
+.catalogue-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 1.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.algo-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
+  gap: 2rem;
   width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
-.algo-card:hover::before {
-  opacity: 1;
-}
-
-.algo-card-content {
-  margin-bottom: 1.5rem;
-  flex: 1;
-}
-
-.algo-card h2 {
-  font-size: 1.5rem;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-}
-
-.algo-description {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-  min-height: 4.5rem;
-}
-
-.algo-metrics {
+.catalogue-header {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.metric-badge {
+.catalogue-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.catalogue-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Category Filter Tabs Bar */
+.catalogue-tabs-bar {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+
+.catalogue-tabs-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.catalogue-tab-btn {
+  padding: 0.5rem 1.15rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.catalogue-tab-btn:hover {
+  background: var(--bg-card-subtle);
   color: var(--text-primary);
-  font-family: var(--font-mono);
-  border: 1px solid var(--border-color);
+  border-color: var(--border-strong);
 }
 
-.metric-badge svg {
-  color: var(--accent-blue);
-}
-
-.btn-primary-full {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 1rem;
-  background: var(--accent-blue);
-  color: white;
-  border-radius: var(--radius-sm);
+.catalogue-tab-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
   font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
 
-.btn-primary-full:hover {
-  background: var(--accent-purple);
-  transform: translateY(-2px);
-  color: white;
+/* Algorithm Grid */
+.catalogue-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.catalogue-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.catalogue-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.catalogue-card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.catalogue-card-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.card-bars-icon {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+  width: 24px;
+}
+
+.cbar {
+  flex: 1;
+  background: var(--primary);
+  border-radius: 2px 2px 0 0;
+  opacity: 0.85;
+}
+
+.cbar.h40 { height: 40%; }
+.cbar.h55 { height: 55%; }
+.cbar.h70 { height: 70%; }
+.cbar.h90 { height: 90%; }
+
+.catalogue-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.catalogue-algo-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.catalogue-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.catalogue-card-arrow {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.catalogue-card:hover .catalogue-card-arrow {
+  transform: translateX(4px);
+  color: var(--primary);
+}
+
+.empty-catalogue-box {
+  grid-column: 1 / -1;
+  padding: 3rem;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .catalogue-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .catalogue-page {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .catalogue-title {
+    font-size: 1.75rem;
+  }
+  .catalogue-grid {
+    grid-template-columns: 1fr;
+  }
 }

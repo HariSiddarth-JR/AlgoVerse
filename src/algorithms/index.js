@@ -21,5 +21,17 @@ export const algorithmsRegistry = {
   [shellSort.id]: shellSort,
   [linearSearch.id]: linearSearch,
   [binarySearch.id]: binarySearch,
-  [jumpSearch.id]: jumpSearch
+  [jumpSearch.id]: jumpSearch,
+
+  // Canonical and alias mappings so all route variants work seamlessly
+  linear: linearSearch,
+  binary: binarySearch,
+  jumpSearch: jumpSearch,
+  bubbleSort: bubbleSort,
+  selectionSort: selectionSort,
+  insertionSort: insertionSort,
+  mergeSort: mergeSort,
+  quickSort: quickSort,
+  heapSort: heapSort,
+  shellSort: shellSort,
 };

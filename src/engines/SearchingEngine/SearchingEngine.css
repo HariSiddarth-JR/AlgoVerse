@@ -1,12 +1,18 @@
+/* ==========================================================================
+   AlgoVerse - Searching Engine Canvas Styles
+   ========================================================================== */
+
 .searching-engine-container {
-  min-height: 450px;
+  min-height: 440px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem 1.5rem;
+  padding: 3rem 1.5rem;
   width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
   overflow-x: auto;
 }
 
@@ -15,28 +21,30 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 36px 12px;
+  gap: 36px 14px;
   width: 100%;
-  max-width: 100%;
 }
 
 .search-box {
   width: 60px;
   height: 60px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  transition: all 0.2s ease;
   position: relative;
+  box-shadow: var(--shadow-sm);
 }
 
 .search-value {
   color: var(--text-primary);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  font-family: var(--font-mono);
+  font-family: 'Fira Code', monospace;
   user-select: none;
 }
 
@@ -45,49 +53,35 @@
   bottom: -24px;
   color: var(--text-muted);
   font-size: 0.75rem;
-  font-family: var(--font-mono);
+  font-family: 'Fira Code', monospace;
 }
 
-/* Tablet Breakpoint (481px - 768px) */
+/* Tablet Breakpoint */
 @media (max-width: 768px) {
   .searching-engine-container {
     min-height: 320px;
-    padding: 1.5rem 1rem;
-  }
-  .searching-grid-wrapper {
-    gap: 30px 10px;
+    padding: 2rem 1rem;
   }
   .search-box {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
   }
   .search-value {
-    font-size: 0.9rem;
-  }
-  .search-index {
-    bottom: -22px;
-    font-size: 0.7rem;
+    font-size: 1rem;
   }
 }
 
-/* Small Mobile Breakpoint (<= 480px) */
+/* Mobile Breakpoint */
 @media (max-width: 480px) {
   .searching-engine-container {
     min-height: 260px;
-    padding: 1.25rem 0.75rem;
-  }
-  .searching-grid-wrapper {
-    gap: 26px 8px;
+    padding: 1.5rem 0.5rem;
   }
   .search-box {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
   .search-value {
-    font-size: 0.8rem;
-  }
-  .search-index {
-    bottom: -20px;
-    font-size: 0.65rem;
+    font-size: 0.85rem;
   }
 }
