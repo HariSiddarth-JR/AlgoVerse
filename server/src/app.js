@@ -8,20 +8,17 @@ const { connectDB, getDBStatus, disconnectDB } = require("./config/db");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS configuration supporting both local development and production
-const allowedOrigins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    process.env.CLIENT_URL,
-].filter(Boolean);
+const { getAllowedOrigins } = require("./config/allowedOrigins");
 
+// CORS configuration supporting both local development and production
 app.use(cors({
     origin: (origin, callback) => {
+        const allowedOrigins = getAllowedOrigins();
         // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            callback(new Error(`Origin ${origin} not allowed by CORS`));
+            callback(null, false);
         }
     },
     credentials: true,

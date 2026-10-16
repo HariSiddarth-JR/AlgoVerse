@@ -6,6 +6,10 @@ import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
 import './AuthModal.css';
 
+// Global tracker to ensure Google Identity Services is only initialized once
+let isGoogleIdentityInitialized = false;
+let activeGoogleCredentialCallback = null;
+
 const AuthModal = () => {
   const {
     isAuthModalOpen,
@@ -33,6 +37,33 @@ const AuthModal = () => {
   const [linkPassword, setLinkPassword] = useState('');
 
   const googleBtnRef = useRef(null);
+  const handleGoogleCredentialRef = useRef(null);
+
+  // Keep callback ref updated with current component state
+  handleGoogleCredentialRef.current = async (response) => {
+    if (!response?.credential) return;
+
+    setSubmitting(true);
+    try {
+      const res = await googleAuth(response.credential);
+
+      if (!res.success && res.code === 'ACCOUNT_EXISTS_WITH_PASSWORD') {
+        setLinkAccountData({
+          credential: response.credential,
+          email: res.email
+        });
+      }
+    } catch (err) {
+      console.warn('Google auth error:', err);
+      setAuthError('Google Sign-In failed. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  activeGoogleCredentialCallback = (response) => {
+    handleGoogleCredentialRef.current?.(response);
+  };
 
   // Reset form when modal opens or mode changes
   useEffect(() => {
@@ -45,7 +76,7 @@ const AuthModal = () => {
     setSuccessMessage(null);
   }, [authModalMode, isAuthModalOpen]);
 
-  // Initialize Google Identity Services if client ID is configured
+  // Initialize Google Identity Services exactly once, and render button when open
   useEffect(() => {
     if (!isAuthModalOpen) return;
 
@@ -55,40 +86,28 @@ const AuthModal = () => {
     let cancelled = false;
     let retryTimer;
 
-    const handleGoogleCredentialResponse = async (response) => {
-      if (!response?.credential || cancelled) return;
-
-      setSubmitting(true);
-      try {
-        const res = await googleAuth(response.credential);
-
-        if (!res.success && res.code === 'ACCOUNT_EXISTS_WITH_PASSWORD') {
-          setLinkAccountData({
-            credential: response.credential,
-            email: res.email
-          });
-        }
-      } catch (err) {
-        console.warn('Google auth error:', err);
-        setAuthError('Google Sign-In failed. Please try again.');
-      } finally {
-        setSubmitting(false);
-      }
-    };
-
-    const initializeGoogle = () => {
+    const setupGoogleSignIn = () => {
       if (cancelled) return;
 
       if (!window.google?.accounts?.id || !googleBtnRef.current) {
-        retryTimer = window.setTimeout(initializeGoogle, 250);
+        retryTimer = window.setTimeout(setupGoogleSignIn, 200);
         return;
       }
 
-      window.google.accounts.id.initialize({
-        client_id: clientId,
-        callback: handleGoogleCredentialResponse
-      });
+      // Initialize Google Identity Services only once across the application lifecycle
+      if (!isGoogleIdentityInitialized) {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: (response) => {
+            if (activeGoogleCredentialCallback) {
+              activeGoogleCredentialCallback(response);
+            }
+          }
+        });
+        isGoogleIdentityInitialized = true;
+      }
 
+      // Clean existing button and render button for current modal mode
       googleBtnRef.current.replaceChildren();
 
       window.google.accounts.id.renderButton(googleBtnRef.current, {
@@ -100,13 +119,13 @@ const AuthModal = () => {
       });
     };
 
-    initializeGoogle();
+    setupGoogleSignIn();
 
     return () => {
       cancelled = true;
       window.clearTimeout(retryTimer);
     };
-  }, [isAuthModalOpen, authModalMode, googleAuth, setAuthError]);
+  }, [isAuthModalOpen, authModalMode]);
 
   if (!isAuthModalOpen) return null;
 

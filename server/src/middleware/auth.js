@@ -1,11 +1,7 @@
 const { verifyToken } = require("../utils/token");
 const User = require("../models/User");
 
-const allowedOrigins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    process.env.CLIENT_URL,
-].filter(Boolean);
+const { getAllowedOrigins } = require("../config/allowedOrigins");
 
 // Authentication middleware to protect routes
 async function protect(req, res, next) {
@@ -72,6 +68,7 @@ function csrfProtection(req, res, next) {
     }
 
     const origin = req.headers.origin || (req.headers.referer ? new URL(req.headers.referer).origin : null);
+    const allowedOrigins = getAllowedOrigins();
 
     if (origin && !allowedOrigins.includes(origin)) {
         return res.status(403).json({

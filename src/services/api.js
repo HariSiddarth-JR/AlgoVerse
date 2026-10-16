@@ -1,13 +1,35 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+// Resolve API base URL robustly across production and local environments
+let API_BASE_URL;
+
+if (import.meta.env.PROD) {
+  const prodEnvUrl = import.meta.env.VITE_API_URL;
+  if (prodEnvUrl && typeof prodEnvUrl === 'string' && prodEnvUrl.trim() && !prodEnvUrl.includes('localhost') && !prodEnvUrl.includes('127.0.0.1')) {
+    const trimmed = prodEnvUrl.trim().replace(/\/+$/, '');
+    API_BASE_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+  } else {
+    API_BASE_URL = 'https://algoverse-api-iuah.onrender.com/api';
+  }
+} else {
+  const devEnvUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+  if (devEnvUrl && typeof devEnvUrl === 'string' && devEnvUrl.trim()) {
+    const trimmed = devEnvUrl.trim().replace(/\/+$/, '');
+    API_BASE_URL = trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+  } else {
+    API_BASE_URL = 'http://localhost:5000/api';
+  }
+}
 
 /**
- * Core HTTP request helper with credentialed cookies and JSON parsing.
+ * Core HTTP request helper with credentialed cookies, bearer token fallback, and JSON parsing.
  */
 async function request(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
   
+  const token = typeof window !== 'undefined' ? localStorage.getItem('algoverse_token') : null;
+
   const headers = {
     'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
     ...(options.headers || {})
   };
 
@@ -22,11 +44,18 @@ async function request(endpoint, options = {}) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
+      if (response.status === 401 && typeof window !== 'undefined') {
+        localStorage.removeItem('algoverse_token');
+      }
       const error = new Error(data.error || `Request failed with status ${response.status}`);
       error.status = response.status;
       error.code = data.code;
       error.data = data;
       throw error;
+    }
+
+    if (data.token && typeof window !== 'undefined') {
+      localStorage.setItem('algoverse_token', data.token);
     }
 
     return data;
@@ -61,8 +90,15 @@ export const api = {
         body: JSON.stringify({ credential, linkPassword })
       }),
 
-    logout: () => 
-      request('/auth/logout', { method: 'POST' }),
+    logout: async () => {
+      try {
+        return await request('/auth/logout', { method: 'POST' });
+      } finally {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('algoverse_token');
+        }
+      }
+    },
 
     getMe: () => 
       request('/auth/me', { method: 'GET' }),

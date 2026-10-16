@@ -33,8 +33,10 @@ function getCookieOptions() {
     const isProduction = process.env.NODE_ENV === "production";
     return {
         httpOnly: true,
-        secure: isProduction, // HTTPS only in production
-        sameSite: isProduction ? "strict" : "lax", // CSRF mitigation
+        // In cross-site production deployments (Vercel frontend + Render backend),
+        // sameSite must be "none" with secure: true for browsers to accept and send cookies.
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
         maxAge: COOKIE_MAX_AGE_DAYS * 24 * 60 * 60 * 1000, // 7 days in ms
         path: "/",
     };
@@ -49,6 +51,7 @@ function sendTokenResponse(user, statusCode, res, message = "Success") {
     res.status(statusCode).json({
         success: true,
         message,
+        token,
         user: user.toSafeJSON ? user.toSafeJSON() : user,
     });
 }
@@ -58,7 +61,7 @@ function clearTokenCookie(res) {
     res.clearCookie("token", {
         httpOnly: true,
         secure: isProduction,
-        sameSite: isProduction ? "strict" : "lax",
+        sameSite: isProduction ? "none" : "lax",
         path: "/",
     });
 }
